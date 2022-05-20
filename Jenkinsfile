@@ -26,7 +26,7 @@ pipeline {
                 sh 'mvn test'
             } 
         }
-        
+
         stage('Build Image') {
             steps {
                 script {
@@ -46,4 +46,4 @@ pipeline {
         }  
     }
 }
-   
+# jenkins pipeline   
