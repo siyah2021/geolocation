@@ -10,11 +10,11 @@ pipeline {
   }
     stages {
         stage('Checkout'){
-            steps{
+            steps {
                 git branch: 'main', url: 'https://github.com/Hermann90/helloworld_jan_22.git'
             }
         }
-    stages {
+        
         stage ('code build') {
             steps {
                 sh 'mvn clean package'
@@ -25,18 +25,18 @@ pipeline {
             steps {
                 sh 'mvn test'
             } 
-            }
+        }
         stage('Build Image') {
             steps {
-                script{
+                script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 } 
             }
         }
-        }
+
         stage('Deploy image') {
             steps{
-                script{ 
+                script { 
                     docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredential) {
                         dockerImage.push()
                     }
