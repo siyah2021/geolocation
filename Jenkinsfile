@@ -18,7 +18,7 @@ pipeline {
         stage ('code build') {
             steps {
                 sh 'mvn clean package'
-                
+
             }
         }
         stage ('Test') {
@@ -26,6 +26,7 @@ pipeline {
                 sh 'mvn test'
             } 
         }
+        
         stage('Build Image') {
             steps {
                 script {
