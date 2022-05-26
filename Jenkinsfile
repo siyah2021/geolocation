@@ -9,13 +9,13 @@ pipeline {
     dockerimage = ''
   }
     stages {
-        stage('Checkout'){
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/siyah2021/geolocation.git'
             }
         }
 
-        stage('code build') {
+        stage('Code Build') {
             steps {
                 sh 'mvn clean package'
 
@@ -35,7 +35,7 @@ pipeline {
             }
         }
 
-        stage('Deploy image') {
+        stage('Deploy Image') {
             steps{
                 script { 
                     docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredential) {
@@ -46,4 +46,4 @@ pipeline {
         }  
     }
 }
-# jenkins pipeline   
+  
