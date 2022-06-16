@@ -14,11 +14,9 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/siyah2021/geolocation.git'
             }
         }
-
         stage('Code Build') {
             steps {
                 sh 'mvn clean package'
-
             }
         }
         stage('Test') {
@@ -26,18 +24,16 @@ pipeline {
                 sh 'mvn test'
             } 
         }
-
         stage('Build Image') {
             steps {
-                script {
+                script{
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 } 
             }
         }
-
         stage('Deploy Image') {
-            steps{
-                script { 
+            steps {
+                script{ 
                     docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredential) {
                         dockerImage.push()
                     }
