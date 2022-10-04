@@ -14,11 +14,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/siyah2021/geolocation.git'
             }
         }
-
+       
         stage('Code Build') {
             steps {
                 sh 'mvn clean package'
-
+         
             }
         }
         stage('Test') {
@@ -26,7 +26,7 @@ pipeline {
                 sh 'mvn test'
             } 
         }
-
+  
         stage('Build Image') {
             steps {
                 script {
@@ -34,7 +34,7 @@ pipeline {
                 } 
             }
         }
-
+        
         stage('Deploy Image') {
             steps{
                 script { 
@@ -43,6 +43,14 @@ pipeline {
                     }
                 }
             }
-        }  
+        //deploy the image that is in ECR to our EKS cluster
+        stage ("Kube Deploy") {
+            steps {
+                withKubeConfig([credentialsId: 'eks_credential', serverUrl: '']) {
+                 sh "kubectl apply -f eks_deploy_from_ecr.yaml"
+                }
+            }
+        }
+        } 
     }
 }
