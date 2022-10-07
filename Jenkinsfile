@@ -4,14 +4,14 @@ pipeline {
         maven 'M2_HOME'
     }
     environment {
-    registry = '585057119159.dkr.ecr.us-east-1.amazonaws.com/devop_repository'
+    registry = '365314850921.dkr.ecr.us-east-1.amazonaws.com/devop_repository'
     registryCredential = 'Jenkins-ecr'
     dockerimage = ''
   }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/siyah2021/geolocation.git'
+                git branch: 'dev', url: 'https://github.com/siyah2021/geolocation.git'
             }
         }
        
